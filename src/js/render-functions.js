@@ -1,5 +1,5 @@
-export function generateImageHTML(image) {
-  return image
+export function generateImageHTML(images) {
+  return images
     .map(
       ({
         webformatURL,
