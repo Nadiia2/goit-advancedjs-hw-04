@@ -40,12 +40,18 @@ function handleSearch(event) {
 
   fetchImages(searchTerm, currentPage)
     .then(data => {
-      if (data.length === 0) {
+      if (data.length === 0 || data.length < 15) {
+        hideLoadMoreBtn();
         showErrorMessage(
           'Sorry, there are no images matching your search query. Please try again!'
         );
+        imageList.innerHTML = generateImageHTML(data);
+        gallery.refresh();
+        form.elements.input.value = '';
+        smoothScroll();
         return;
       }
+
       imageList.innerHTML = generateImageHTML(data);
       gallery.refresh();
       form.elements.input.value = '';
@@ -67,6 +73,10 @@ function loadMoreImages() {
         showErrorMessage(
           "We're sorry, but you've reached the end of search results."
         );
+        const markup = generateImageHTML(data);
+        imageList.insertAdjacentHTML('beforeend', markup);
+        gallery.refresh();
+        smoothScroll();
         return;
       }
       const markup = generateImageHTML(data);
@@ -77,6 +87,59 @@ function loadMoreImages() {
     .catch(handleError)
     .finally(() => loader.classList.add('is-hidden'));
 }
+
+// function handleSearch(event) {
+//   event.preventDefault();
+//   searchTerm = event.currentTarget.elements.input.value.trim();
+
+//   if (!searchTerm) {
+//     showErrorMessage('Search field can not be empty!');
+//     return;
+//   }
+
+//   loader.classList.remove('is-hidden');
+//   currentPage = 1;
+//   imageList.innerHTML = '';
+
+//   fetchImages(searchTerm, currentPage)
+//     .then(data => {
+//       if (data.length === 0) {
+//         showErrorMessage(
+//           'Sorry, there are no images matching your search query. Please try again!'
+//         );
+//         return;
+//       }
+//       imageList.innerHTML = generateImageHTML(data);
+//       gallery.refresh();
+//       form.elements.input.value = '';
+//       showLoadMoreBtn();
+//       smoothScroll();
+//     })
+//     .catch(handleError)
+//     .finally(() => loader.classList.add('is-hidden'));
+// }
+
+// function loadMoreImages() {
+//   loader.classList.remove('is-hidden');
+//   currentPage++;
+
+//   fetchImages(searchTerm, currentPage)
+//     .then(data => {
+//       if (data.length === 0 || data.length < 15) {
+//         hideLoadMoreBtn();
+//         showErrorMessage(
+//           "We're sorry, but you've reached the end of search results."
+//         );
+//         return;
+//       }
+//       const markup = generateImageHTML(data);
+//       imageList.insertAdjacentHTML('beforeend', markup);
+//       gallery.refresh();
+//       smoothScroll();
+//     })
+//     .catch(handleError)
+//     .finally(() => loader.classList.add('is-hidden'));
+// }
 
 function showErrorMessage(message) {
   iziToast.show({
