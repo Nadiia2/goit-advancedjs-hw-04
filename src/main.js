@@ -40,10 +40,17 @@ function handleSearch(event) {
 
   fetchImages(searchTerm, currentPage)
     .then(data => {
-      if (data.length === 0 || data.length < 15) {
+      if (data.length === 0) {
         hideLoadMoreBtn();
         showErrorMessage(
           'Sorry, there are no images matching your search query. Please try again!'
+        );
+        return;
+      }
+      if (data.length < 15) {
+        hideLoadMoreBtn();
+        showErrorMessage(
+          "We're sorry, but you've reached the end of search results."
         );
         imageList.innerHTML = generateImageHTML(data);
         gallery.refresh();
@@ -68,7 +75,14 @@ function loadMoreImages() {
 
   fetchImages(searchTerm, currentPage)
     .then(data => {
-      if (data.length === 0 || data.length < 15) {
+      if (data.length === 0) {
+        hideLoadMoreBtn();
+        showErrorMessage(
+          "We're sorry, but you've reached the end of search results."
+        );
+        return;
+      }
+      if (data.length < 15) {
         hideLoadMoreBtn();
         showErrorMessage(
           "We're sorry, but you've reached the end of search results."
