@@ -153,6 +153,7 @@ img {
 
 loader.active {
   display: block;
+  margin: 100px auto;
 }
 
 .hidden-loader {
