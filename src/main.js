@@ -177,8 +177,8 @@ function handleSearch(event) {
     return;
   }
 
-  loader.classList.remove('hidden-loader');
   hideLoadMoreBtn(); 
+  loader.classList.remove('hidden-loader');
   currentPage = 1;
   imageList.innerHTML = '';
 
@@ -212,8 +212,8 @@ function handleSearch(event) {
 }
 
 function loadMoreImages() {
-  loader.classList.remove('hidden-loader');
-  hideLoadMoreBtn(); 
+  hideLoadMoreBtn();
+  loader.classList.remove('hidden-loader'); 
   currentPage++;
 
   fetchImages(searchTerm, currentPage)
