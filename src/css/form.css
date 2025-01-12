@@ -69,7 +69,8 @@ img {
 
 .next-btn {
   display: block;
-  margin: 100px auto;
+/*   margin: 100px auto; */
+  margin: 0px auto;
 }
 
 .next-btn:hover,
